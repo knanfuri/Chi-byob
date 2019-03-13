@@ -10,12 +10,16 @@ $(document).ready(function() {
     let myApiKey = `&key=AIzaSyCzZNcykfia8yZWraDJE98aLEGuNw3V4Ro`;
     let queryUrl = `https://maps.googleapis.com/maps/api/geocode/json?${qaddress}${myApiKey}`;
     console.log(queryUrl);
+    //   });
+    $.ajax({
+      url: queryUrl,
+      method: "GET"
+    }).then(function(response) {
+      let latitude = response.results[0].geometry.location.lat;
+      let longitude = response.results[0].geometry.location.lng;
+      $("#latLng")
+        .append($("<p>").text(`latitude: ${latitude}`))
+        .append($("<p>").text(`longitude: ${longitude}`));
+    });
   });
 });
-// $.ajax({
-//   url: queryURL,
-//   method: "GET"
-// }).then(function(response) {
-//   console.log(response);
-// });
-// })
