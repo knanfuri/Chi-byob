@@ -21,16 +21,22 @@ $(document).ready(function() {
         .append($("<p>").text(`longitude: ${longitude}`));
 
       // yelp search radius input is in meters- we need some maths here...
-      let searchRadius = $("#radius").val();
+      let searchRadius = parseInt($("#radius").val());
+      console.log(searchRadius);
       let yelpApiKey =
         "iXz6CphpOprm4NkabLwuanwM8yIEQhqd2GYhVMHIep1SNAVRfRKKGl9N8DS7jXHxuOowfKm1kplvxQYV__DC74XDrxf-BshhyNj_j8_X0bpIgErelHgQTUvj6YaBXHYx";
       // i hope term=byob works for us!
       let queryYelpUrl = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=byob&latitude=${latitude}&longitude=${longitude}&radius=${searchRadius}&api_key=${yelpApiKey}&open_now=true`;
+      //   we will need cors implementation- thanks to TA Michael for the headerParams tip
+      const headerParams = {
+        Authorization:
+          "bearer iXz6CphpOprm4NkabLwuanwM8yIEQhqd2GYhVMHIep1SNAVRfRKKGl9N8DS7jXHxuOowfKm1kplvxQYV__DC74XDrxf-BshhyNj_j8_X0bpIgErelHgQTUvj6YaBXHYx"
+      };
       // the yelp ajax call
-      //   we will need cors implementation
       $.ajax({
         url: queryYelpUrl,
-        method: "GET"
+        method: "GET",
+        headers: headerParams
       }).then(function(response) {
         console.log(response);
       });
