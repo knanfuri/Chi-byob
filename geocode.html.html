@@ -31,13 +31,6 @@
     <button id="doItGeocode" type="submit">Press to Geocode!</button>
     <div id="latLng"></div>
 
-    <button name="mcdonalds" class="clickCount">
-      Add click count
-    </button>
-    <button name="wendys" class="clickCount">
-      Add click count
-    </button>
-
     <!-- <script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script> -->
     <script>
       // Initialize Firebase
@@ -70,24 +63,6 @@
 
       var clickCounter = 0;
 
-      $(".clickCount").on("click", function() {
-        var spotToUpdate = "/" + $(this).attr("name");
-
-        console.log("this is our spot to save", spotToUpdate);
-
-        db.ref(spotToUpdate).once("value", function(snapshot) {
-          if (snapshot.val() === null) {
-            db.ref(spotToUpdate).set({ clickCount: 1 });
-          } else {
-            var newClickCount = snapshot.val().clickCount + 1;
-
-            // console.log("this is a snapshot!!", newCLickCount);
-            // console.log("this is our snapshot!!!", snapshot.val());
-            db.ref(spotToUpdate).set({ clickCount: newClickCount });
-          }
-        });
-      });
-
       $("#doItGeocode").on("click", function() {
         clickCounter++;
         console.log(clickCounter);
@@ -97,27 +72,16 @@
         });
       });
 
-      var test = {
-        name: "tom",
-        rating: 5,
-        street: "131 Chicago Ave",
-        state: "Il",
-        zip: 60642
+      var location = {
+        Name: "Fogo",
+        Rating: 5,
+        Street: "131 Chicago Ave",
+        City: "Chicago",
+        State: "il",
+        ZipCode: 60615
       };
-
-      // var location = {
-      //   Name: "Fogo",
-      //   Rating: 5,
-      //   Street: "131 Chicago Ave",
-      //   City: "Chicago",
-      //   State: "il",
-      //   ZipCode: 60615
-      // };
-
-      // db.ref().on("child_added", function(snapshot) {
-      //   console.log("thi sis our thing from DB", snapshot.val());
-      // });
-      console.log("is this working ?", window.location);
+      // // db.ref().push(location);
+      console.log("is this working ?", location);
     </script>
   </body>
 </html>
