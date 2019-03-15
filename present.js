@@ -72,7 +72,7 @@ $(document).ready(function () {
                 for (var i = 0; i < response.businesses.length; i++) {
 
                     var innerTr = $("<tr>");
-
+                    var hiddenTr = $("<tr>");
                     // izzy says: if you hover over the name of the restaurant, the image pops up
                     // izzy says: for Ky - define the class I gave to the image, so that the image is smaller. 
                     var imageTd = $("<td>");
@@ -89,7 +89,8 @@ $(document).ready(function () {
                     innerTr.append($("<td>").text(response.businesses[i].phone));
                     innerTr.append($("<td>").text(response.businesses[i].categories[0].title));
                     innerTr.append($("<td>").append($("<button>").text("give me directions").attr("id", `id${i}`)));
-                    overBody.append(innerTr);
+                    hiddenTr.text("test");
+                    overBody.append(innerTr, hiddenTr);
 
                 }
                 $("#results-div").append(overHead, overBody);
