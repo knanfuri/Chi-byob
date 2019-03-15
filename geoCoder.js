@@ -43,3 +43,18 @@ $(document).ready(function() {
     });
   });
 });
+// suggestions for Izzy dynamic html generation
+// firstPlace.append($("<p>").text(xxx.name));
+// firstPlace.append($("<p>").text(xxx.date));
+// firstPlace.append($("<p>").text(xxx.address));
+// firstPlace.append($("<p>").text(xxx.name));
+// firstPlace.append($("<p>").text(xxx.name));
+// firstPlace.append(
+//   $("<button>")
+//     .text("give me directions")
+//     .attr("id", `id${i}`)
+// );
+
+// $("#location").append(firstPlace);
+
+fi;
