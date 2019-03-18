@@ -57,15 +57,15 @@ $(document).ready(function() {
         // // izzy's old solution^^^
 
         for (var i = 0; i < response.businesses.length; i++) {
-          $("body").append(`
-            <div class="container" id="rest${i}>
-        <div class="row">
+          $("#results-div").append(`
+            
+        <div class="row display-row">
             <div class="col-4">
                 <img class="smallImg" src="${response.businesses[i].image_url}">
             </div>
-            <div class="col-6">
+            <div class="col-8">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col">
                         <div class="row">
                             <h4>${response.businesses[i].name}</h4>
                             <br>
@@ -84,12 +84,12 @@ $(document).ready(function() {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-4"><button class="directionsButton" id='id${i}'>Give me directions</button></div>
+                    <div class="col-6"><button class="directionsButton" id='id${i}'>Give me directions</button></div>
                     <div class="col-6"><button>Not BYOB? Click here.</button></div>
                 </div>
             </div>
         </div>
-    </div>`);
+    `);
           // izzy's new solution
           // // // izzy's old solutionVVV
           //   var innerTr = $("<tr>");
