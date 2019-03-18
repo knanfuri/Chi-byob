@@ -26,14 +26,13 @@
   <body>
     <nav class="nav-bar">
       <div class="mx-auto" style="width: 150px;">
-        <img class="logo" src="./assets/images/logo-01.png" />
+        <a href="index.html">
+          <img class="logo" src="./assets/images/logo-01.png" />
+        </a>
       </div>
     </nav>
 
     <div class="container" id="form-input">
-      <!-- <div id="slogan">
-        <p>Where do you want to drink?</p>
-      </div> -->
       <form>
         <div class="form-group row">
           <div class="col-7">
@@ -68,10 +67,9 @@
       </form>
     </div>
 
-    <footer>
-      built by nick + izzy + scott + kevin + ky
-    </footer>
-    <div id="results-div"></div>
+    <div class="container">
+      <table class="table" id="results-div"></table>
+    </div>
     <script
       src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -88,5 +86,8 @@
       crossorigin="anonymous"
     ></script>
     <script src="./present.js"></script>
+    <div class="footer navbar-fixed-bottom" id="footer">
+      built by nick + izzy + scott + kevin + ky
+    </div>
   </body>
 </html>

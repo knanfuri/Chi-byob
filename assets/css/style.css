@@ -1,7 +1,12 @@
-@import url("https://fonts.googleapis.com/css?family=Work+Sans:300,400");
+@import url("https://fonts.googleapis.com/css?family=Work+Sans");
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
   background-image: url(/assets/images/background-image.jpg);
-  /* height: 1000px; */
+  /* height: 100%; */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -19,24 +24,21 @@ body {
   max-width: 110px;
 }
 
-#slogan {
-  color: white;
-  font-size: 30px;
-  font-weight: 300;
-  margin-bottom: 100px;
-  text-align: center;
-}
-
 #form-input {
   position: absolute;
   bottom: 50%;
   left: 15%;
 }
 
-footer {
-  padding: 20px;
+#footer {
+  /* padding: 20px; */
+  margin-top: 200px;
   position: absolute;
-  left: 45%;
+  left: 41%;
   bottom: 0;
   font-size: 10px;
+}
+
+th {
+  font-weight: 700;
 }
