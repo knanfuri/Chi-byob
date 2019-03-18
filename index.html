@@ -26,7 +26,41 @@
   </head>
 
   <body>
-    <div class="modal-body" id="modalMap"></div>
+    <!-- Modal code below inspired by https://embed.plnkr.co/plunk/ZDkUYz -->
+    <div class="modal-body" id="modalMap">
+      <div
+        class="modal fade"
+        id="myModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="myModalLabel"
+      >
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel"></h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-12 modal_body_map">
+                  <div class="location-map" id="location-map"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end of code inspired by https://embed.plnkr.co/plunk/ZDkUYz -->
+
     <nav class="nav-bar">
       <div class="mx-auto" style="width: 150px;">
         <a href="index.html">

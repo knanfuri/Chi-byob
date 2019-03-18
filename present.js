@@ -70,7 +70,7 @@ $(document).ready(function() {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6"><button class="directionsButton" id='id${i}'>Give me directions</button></div>
+                    <div class="col-6"><button class="directionsButton" id='id${i}' data-toggle="modal" data-target="#myModal">Give me directions</button></div>
                     <div class="col-6"><button class="denialButton" id="notid${i}">Not BYOB? Click here.</button></div>
                 </div>
             </div>
@@ -93,12 +93,12 @@ $(document).ready(function() {
             yelpObject.businesses[index].coordinates.longitude;
           // google directions ajax call
           let queryDirUrl = `https://www.google.com/maps/embed/v1/directions?origin=${startLatitude},${startLongitude}&destination=${destinationLatitude},${destinationLongitude}${googApiKey}`;
-
-          $(`#modalMap`)
-            .modal("toggle")
-            .html(
-              `<iframe width='600'  height='450'  frameborder='0' style='border:0'  src=${queryDirUrl} allowfullscreen></iframe>`
-            );
+          $(".location-map").html(
+            `<iframe width='760'  height='450'  frameborder='0' style='border:0'  src=${queryDirUrl} allowfullscreen></iframe>`
+          );
+          $("#myModalLabel").text(
+            `Directions to ${yelpObject.businesses[index].name}`
+          );
         });
         $(document).on("click", ".denialButton", function() {
           let denialId = $(this).attr("id");
