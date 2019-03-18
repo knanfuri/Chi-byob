@@ -5,7 +5,7 @@ html {
 }
 
 body {
-  background-image: url(/assets/images/background-image.jpg);
+  background-image: url(../images/background-image.jpg);
   /* height: 100%; */
   background-position: center;
   background-repeat: no-repeat;
@@ -24,6 +24,15 @@ body {
   max-width: 110px;
 }
 
+#results-div {
+  width: 800px;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 50px;
+}
+
 #form-input {
   position: absolute;
   bottom: 50%;
@@ -31,11 +40,12 @@ body {
 }
 
 #footer {
-  /* padding: 20px; */
-  margin-top: 200px;
+  margin-top: 40px;
+  margin-bottom: 20px;
   position: absolute;
-  left: 41%;
+  left: 44%;
   bottom: 0;
+  color: white;
   font-size: 10px;
 }
 
@@ -43,6 +53,20 @@ th {
   font-weight: 700;
 }
 .smallImg {
-  max-width: 300px;
-  max-height: 150px;
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+}
+
+.card-title {
+  font-weight: 800;
+}
+
+.food-type {
+  font-style: italic;
+}
+
+.inside {
+  margin-right: 20px;
+  margin-top: 20px;
 }
