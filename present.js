@@ -7,6 +7,9 @@ $(document).ready(function() {
       .split(" ")
       .join("+");
 
+    $("#form-input").hide();
+
+
     let qaddress = `address=${address}`;
     let googApiKey = `&key=AIzaSyCzZNcykfia8yZWraDJE98aLEGuNw3V4Ro`;
     let queryGeoUrl = `https://maps.googleapis.com/maps/api/geocode/json?${qaddress}${googApiKey}`;
@@ -15,8 +18,9 @@ $(document).ready(function() {
       url: queryGeoUrl,
       method: "GET"
     }).then(function(response) {
-      startLatitude = response.results[0].geometry.location.lat;
-      startLongitude = response.results[0].geometry.location.lng;
+
+      let startLatitude = response.results[0].geometry.location.lat;
+      let startLongitude = response.results[0].geometry.location.lng;
 
       // yelp search radius input is in meters- we need some maths here...
       // Izzy says: I added this function to allow us to put in miles, since I do not think in meters
@@ -37,6 +41,10 @@ $(document).ready(function() {
         method: "GET",
         headers: headerParams
       }).then(function(response) {
+
+        // var overTable = $("<table>");
+        // overTable.addClass("table");
+
         let yelpObject = response;
         var overTable = $("<table>");
         var overHead = $("<thead>");
@@ -50,8 +58,8 @@ $(document).ready(function() {
         overTr.append($("<th>").text("Cuisine"));
         overTr.append($("<th>"));
         overHead.append(overTr);
-        overTable.append(overHead);
 
+        overTable.append(overHead);
         for (var i = 0; i < response.businesses.length; i++) {
           var innerTr = $("<tr>");
 
@@ -64,7 +72,8 @@ $(document).ready(function() {
             .tooltip({
               html: true,
               title:
-                "<img class='response-image' src=" +
+
+                "<img class='img-thumbnail' src=" +
                 response.businesses[i].image_url +
                 ">"
             });
@@ -82,12 +91,13 @@ $(document).ready(function() {
               $("<button>")
                 .text("give me directions")
                 .attr("id", `id${i}`)
-                .addClass("directionsButton")
+                .addClass("btn btn-outline-light btn-sm directionsButton")
             )
           );
           overBody.append(innerTr);
         }
         $("#results-div").append(overHead, overBody);
+
         // gets button clicks introduce
         $(document).on("click", ".directionsButton", function() {
           let buttonId = $(this).attr("id");
