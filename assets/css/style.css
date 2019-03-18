@@ -42,3 +42,7 @@ body {
 th {
   font-weight: 700;
 }
+.smallImg {
+  max-width: 300px;
+  max-height: 150px;
+}
