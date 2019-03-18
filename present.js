@@ -1,7 +1,7 @@
-$(document).ready(function() {
+$(document).ready(function () {
   $('[data-toggle="tooltip"]').tooltip();
 
-  $("#doItGeocode").on("click", function() {
+  $("#doItGeocode").on("click", function () {
     let address = $("#startAddress")
       .val()
       .split(" ")
@@ -17,7 +17,7 @@ $(document).ready(function() {
     $.ajax({
       url: queryGeoUrl,
       method: "GET"
-    }).then(function(response) {
+    }).then(function (response) {
       let startLatitude = response.results[0].geometry.location.lat;
       let startLongitude = response.results[0].geometry.location.lng;
 
@@ -39,7 +39,7 @@ $(document).ready(function() {
         url: queryYelpUrl,
         method: "GET",
         headers: headerParams
-      }).then(function(response) {
+      }).then(function (response) {
         // var overTable = $("<table>");
         // overTable.addClass("table");
 
@@ -61,7 +61,7 @@ $(document).ready(function() {
         // overTable.append(overHead);
         // // izzy's old solution^^^
 
-        overTable.append(overHead);
+        // overTable.append(overHead);
         for (var i = 0; i < response.businesses.length; i++) {
           $("#results-div").append(`
             
@@ -77,15 +77,15 @@ $(document).ready(function() {
                             <br>
                             <h4>${response.businesses[i].location.address1}, ${
             response.businesses[i].location.city
-          }</h4>
+            }</h4>
 
                         </div>
                         <div class="row">Phone No: ${
-                          response.businesses[i].phone
-                        }</div>
+            response.businesses[i].phone
+            }</div>
                         <div class="row">${
-                          response.businesses[i].categories[0].title
-                        }</div>
+            response.businesses[i].categories[0].title
+            }</div>
 
                     </div>
                 </div>
@@ -135,7 +135,7 @@ $(document).ready(function() {
         $("#results-div").append(overHead, overBody);
 
         // gets button clicks introduce
-        $(document).on("click", ".directionsButton", function() {
+        $(document).on("click", ".directionsButton", function () {
           let buttonId = $(this).attr("id");
           let index = $(this)
             .attr("id")
