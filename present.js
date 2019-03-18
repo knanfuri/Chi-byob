@@ -1,7 +1,7 @@
-$(document).ready(function () {
+$(document).ready(function() {
   $('[data-toggle="tooltip"]').tooltip();
 
-  $("#doItGeocode").on("click", function () {
+  $("#doItGeocode").on("click", function() {
     let address = $("#startAddress")
       .val()
       .split(" ")
@@ -17,7 +17,7 @@ $(document).ready(function () {
     $.ajax({
       url: queryGeoUrl,
       method: "GET"
-    }).then(function (response) {
+    }).then(function(response) {
       let startLatitude = response.results[0].geometry.location.lat;
       let startLongitude = response.results[0].geometry.location.lng;
 
@@ -39,41 +39,48 @@ $(document).ready(function () {
         url: queryYelpUrl,
         method: "GET",
         headers: headerParams
-
       }).then(function(response) {
         let yelpObject = response;
         for (var i = 0; i < response.businesses.length; i++) {
           $("#results-div").append(`
-            
-        <div class="row display-row">
-            <div class="col-4">
-                <img class="smallImg" src="${response.businesses[i].image_url}">
+        
+        <div class="card mb-3" style="max-width: 800px;">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img class="smallImg img-fluid" src="${
+                  response.businesses[i].image_url
+                }">
             </div>
-            <div class="col-8">
-                <div class="row">
+            <div class="col-md-8">
+            <div class="card-body">
                     <div class="col">
                         <div class="row">
-                            <h4>${response.businesses[i].name}</h4>
-                            <br>
-                            <h4>${response.businesses[i].location.address1}, ${
-            response.businesses[i].location.city
-            }</h4>
+                            <h4 class="card-title">${
+                              response.businesses[i].name
+                            }</h4>
+                            </div>
+                            
+                            <div class="row">
+                            <div class="card-text">${
+                              response.businesses[i].location.address1
+                            }, ${response.businesses[i].location.city}</div>
 
                         </div>
                         <div class="row">Phone No: ${
-            response.businesses[i].phone
-            }</div>
-                        <div class="row">${
-            response.businesses[i].categories[0].title
-            }</div>
-
+                          response.businesses[i].phone
+                        }</div>
+                        <div class="row food-type">${
+                          response.businesses[i].categories[0].title
+                        }</div>
+                        <div class="row">
+                        <button class="directionsButton inside btn btn-dark" id='id${i}'>Give me directions</button>
+                        <span><button class="inside btn btn-dark">Not BYOB? Click here.</button></span>
+                    </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-6"><button class="directionsButton" id='id${i}'>Give me directions</button></div>
-                    <div class="col-6"><button>Not BYOB? Click here.</button></div>
-                </div>
+                
             </div>
+        </div>
         </div>
     `);
         }
