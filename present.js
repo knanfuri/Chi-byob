@@ -8,6 +8,8 @@ $(document).ready(function() {
       .join("+");
     console.log(address);
 
+    $("#form-input").hide();
+
     let qaddress = `address=${address}`;
     let googApiKey = `&key=AIzaSyCzZNcykfia8yZWraDJE98aLEGuNw3V4Ro`;
     let queryGeoUrl = `https://maps.googleapis.com/maps/api/geocode/json?${qaddress}${googApiKey}`;
@@ -16,8 +18,8 @@ $(document).ready(function() {
       url: queryGeoUrl,
       method: "GET"
     }).then(function(response) {
-      startLatitude = response.results[0].geometry.location.lat;
-      startLongitude = response.results[0].geometry.location.lng;
+      let startLatitude = response.results[0].geometry.location.lat;
+      let startLongitude = response.results[0].geometry.location.lng;
 
       // yelp search radius input is in meters- we need some maths here...
       // Izzy says: I added this function to allow us to put in miles, since I do not think in meters
@@ -38,6 +40,9 @@ $(document).ready(function() {
         method: "GET",
         headers: headerParams
       }).then(function(response) {
+        // var overTable = $("<table>");
+        // overTable.addClass("table");
+
         let yelpObject = response;
 
         // // izzy's old solutionVVV
@@ -56,6 +61,7 @@ $(document).ready(function() {
         // overTable.append(overHead);
         // // izzy's old solution^^^
 
+        overTable.append(overHead);
         for (var i = 0; i < response.businesses.length; i++) {
           $("#results-div").append(`
             
@@ -127,6 +133,7 @@ $(document).ready(function() {
           // // // izzy's old solution^^^
         }
         $("#results-div").append(overHead, overBody);
+
         // gets button clicks introduce
         $(document).on("click", ".directionsButton", function() {
           let buttonId = $(this).attr("id");
