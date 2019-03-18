@@ -40,28 +40,7 @@ $(document).ready(function() {
         method: "GET",
         headers: headerParams
       }).then(function(response) {
-        // var overTable = $("<table>");
-        // overTable.addClass("table");
-
         let yelpObject = response;
-
-        // // izzy's old solutionVVV
-        // var overTable = $("<table>");
-        // var overHead = $("<thead>");
-        // var overTr = $("<tr>");
-        // var overBody = $("<tbody>");
-
-        // overTr.append($("<th>").text("Name"));
-        // overTr.append($("<th>").text("Address"));
-        // overTr.append($("<th>").text("City"));
-        // overTr.append($("<th>").text("Phone No."));
-        // overTr.append($("<th>").text("Cuisine"));
-        // overTr.append($("<th>"));
-        // overHead.append(overTr);
-        // overTable.append(overHead);
-        // // izzy's old solution^^^
-
-        // overTable.append(overHead);
         for (var i = 0; i < response.businesses.length; i++) {
           $("#results-div").append(`
         
@@ -104,47 +83,14 @@ $(document).ready(function() {
         </div>
         </div>
     `);
-          // izzy's new solution
-          // // // izzy's old solutionVVV
-          //   var innerTr = $("<tr>");
-          //   // izzy says: if you hover over the name of the restaurant, the image pops up
-          //   // izzy says: for Ky - define the class I gave to the image, so that the image is smaller.
-          //   var imageTd = $("<td>");
-          //   imageTd
-          //     .text(response.businesses[i].name)
-          //     .attr("data-toggle", "tooltip")
-          //     .tooltip({
-          //       html: true,
-          //       title:
-          //         "<img class='response-image' src=" +
-          //         response.businesses[i].image_url +
-          //         ">"
-          //     });
-          //   innerTr.append(imageTd);
-          //   innerTr.append(
-          //     $("<td>").text(response.businesses[i].location.address1)
-          //   );
-          //   innerTr.append($("<td>").text(response.businesses[i].location.city));
-          //   innerTr.append($("<td>").text(response.businesses[i].phone));
-          //   innerTr.append(
-          //     $("<td>").text(response.businesses[i].categories[0].title)
-          //   );
-          //   innerTr.append(
-          //     $("<td>").append(
-          //       $("<button>")
-          //         .text("give me directions")
-          //         .attr("id", `id${i}`)
-          //         .addClass("directionsButton")
-          //     )
-          //   );
-          //   overBody.append(innerTr);
-          // // // izzy's old solution^^^
         }
-        $("#results-div").append(overHead, overBody);
 
-        // gets button clicks introduce
+
         $(document).on("click", ".directionsButton", function() {
+
           let buttonId = $(this).attr("id");
+          console.log($(this));
+
           let index = $(this)
             .attr("id")
             .substr(2);
