@@ -1,7 +1,8 @@
-$(document).ready(function() {
-  $('[data-toggle="tooltip"]').tooltip();
+$(document).ready(function () {
+  //   $('[data-toggle="tooltip"]').tooltip();
 
-  $("#doItGeocode").on("click", function() {
+  $("#doItGeocode").on("click", function () {
+
     let address = $("#startAddress")
       .val()
       .split(" ")
@@ -10,6 +11,48 @@ $(document).ready(function() {
 
     $("#form-input").hide();
 
+    $("#loading-icon").append(`<h1 class="ml1">
+    <span class="text-wrapper">
+        <span class="line line1"></span>
+        <span class="letters">LOADING</span>
+        <span class="line line2"></span>
+      </span>
+    </h1>`)
+
+    $('.ml1 .letters').each(function () {
+      $(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>"));
+    });
+
+    anime.timeline({ loop: true })
+      .add({
+        targets: '.ml1 .letter',
+        scale: [0.3, 1],
+        opacity: [0, 1],
+        translateZ: 0,
+        easing: "easeOutExpo",
+        duration: 600,
+        delay: function (el, i) {
+          return 70 * (i + 1)
+        }
+      }).add({
+        targets: '.ml1 .line',
+        scaleX: [0, 1],
+        opacity: [0.5, 1],
+        easing: "easeOutExpo",
+        duration: 700,
+        offset: '-=875',
+        delay: function (el, i, l) {
+          return 80 * (l - i);
+        }
+      }).add({
+        targets: '.ml1',
+        opacity: 0,
+        duration: 1000,
+        easing: "easeOutExpo",
+        delay: 1000
+      });
+
+
     let qaddress = `address=${address}`;
     let googApiKey = `&key=AIzaSyCzZNcykfia8yZWraDJE98aLEGuNw3V4Ro`;
     let queryGeoUrl = `https://maps.googleapis.com/maps/api/geocode/json?${qaddress}${googApiKey}`;
@@ -17,7 +60,7 @@ $(document).ready(function() {
     $.ajax({
       url: queryGeoUrl,
       method: "GET"
-    }).then(function(response) {
+    }).then(function (response) {
       let startLatitude = response.results[0].geometry.location.lat;
       let startLongitude = response.results[0].geometry.location.lng;
 
@@ -39,55 +82,62 @@ $(document).ready(function() {
         url: queryYelpUrl,
         method: "GET",
         headers: headerParams
-      }).then(function(response) {
+      }).then(function (response) {
+        $("body").addClass("second");
         let yelpObject = response;
         for (var i = 0; i < response.businesses.length; i++) {
+          $("#loading-icon").hide();
           $("#results-div").append(`
         
         <div class="card mb-3" style="max-width: 800px;">
         <div class="row no-gutters">
             <div class="col-md-4">
                 <img class="smallImg img-fluid" src="${
-                  response.businesses[i].image_url
-                }">
+            response.businesses[i].image_url
+            }">
             </div>
             <div class="col-md-8">
             <div class="card-body">
                     <div class="col">
                         <div class="row">
                             <h4 class="card-title">${
-                              response.businesses[i].name
-                            }</h4>
+            response.businesses[i].name
+            }</h4>
                             </div>
                             
                             <div class="row">
                             <div class="card-text">${
-                              response.businesses[i].location.address1
-                            }, ${response.businesses[i].location.city}</div>
+            response.businesses[i].location.address1
+            }, ${response.businesses[i].location.city}</div>
 
                         </div>
                         <div class="row">Phone No: ${
-                          response.businesses[i].phone
-                        }</div>
+            response.businesses[i].phone
+            }</div>
                         <div class="row food-type">${
-                          response.businesses[i].categories[0].title
-                        }</div>
+            response.businesses[i].categories[0].title
+            }</div>
                         <div class="row">
-                        <button class="directionsButton inside btn btn-dark" id='id${i}'>Give me directions</button>
-                        <span><button class="inside btn btn-dark">Not BYOB? Click here.</button></span>
+
+                        <div class="col-6"><button class="directionsButton inside btn btn-dark" id='id${i}' data-toggle="modal" data-target="#myModal">Give me directions</button></div>
+                        <div class="col-6"><button class="inside btn btn-dark denialButton" id='notid${i}'>Not BYOB? Click here.</button></div>
                     </div>
                     </div>
                 </div>
-                
+            
+                </div>
             </div>
         </div>
         </div>
     `);
         }
 
-        $(document).on("click", ".directionsButton", function() {
+
+        $(document).on("click", ".directionsButton", function () {
+
           let buttonId = $(this).attr("id");
           console.log($(this));
+
 
           let index = $(this)
             .attr("id")
@@ -100,10 +150,21 @@ $(document).ready(function() {
             yelpObject.businesses[index].coordinates.longitude;
           // google directions ajax call
           let queryDirUrl = `https://www.google.com/maps/embed/v1/directions?origin=${startLatitude},${startLongitude}&destination=${destinationLatitude},${destinationLongitude}${googApiKey}`;
-
-          $(`#${buttonId}`).append(
-            `<iframe width='600'  height='450'  frameborder='0' style='border:0'  src=${queryDirUrl} allowfullscreen></iframe>`
+          $(".location-map").html(
+            `<iframe width='760'  height='450'  frameborder='0' style='border:0'  src=${queryDirUrl} allowfullscreen></iframe>`
           );
+          $("#myModalLabel").text(
+            `Directions to ${yelpObject.businesses[index].name}`
+          );
+        });
+        $(document).on("click", ".denialButton", function () {
+          let denialId = $(this).attr("id");
+          console.log(denialId + "is not a BYOB");
+
+          let denialIndex = $(this)
+            .attr("id")
+            .substr(5);
+          console.log(yelpObject.businesses[denialIndex].name);
         });
       });
     });

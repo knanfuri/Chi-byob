@@ -1,95 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Working</title>
-    <!-- <link rel="stylesheet" href="./assets/css/reset.css" /> -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
-    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Working</title>
+  <!-- <link rel="stylesheet" href="./assets/css/reset.css" /> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" />
+  <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="./geoCoder.js"></script> -->
-  </head>
+</head>
 
-  <body>
-    <nav class="nav-bar">
-      <div class="mx-auto" style="width: 110px;">
-        <a href="index.html">
-          <img class="logo" src="./assets/images/logo-01.png" />
-        </a>
-      </div>
-    </nav>
-
-    <div class="container" id="form-input">
-      <h1>slogan slogan slogan</h1>
-
-      <form>
-        <div class="form-group row">
-          <div class="col-7">
-            <input
-              type="text"
-              name="addy"
-              class="form-control"
-              id="startAddress"
-              placeholder="Your Address"
-            />
-          </div>
-          <div class="col-3">
-            <select class="custom-select " id="miles">
-              <option selected>within distance</option>
-              <option id="radius" value="1">1 mile</option>
-              <option id="radius" value="2">2 miles</option>
-              <option id="radius" value="5">5 miles</option>
-              <option id="radius" value="10">10 miles</option>
-              <option id="radius" value="20">20 miles</option>
-            </select>
-          </div>
-          <div class="col-2">
-            <button
-              id="doItGeocode"
-              type="button"
-              class="btn btn-outline-light"
-            >
-              <i class="fas fa-search"></i> Search
+<body class="initial">
+  <!-- Modal code below inspired by https://embed.plnkr.co/plunk/ZDkUYz -->
+  <div class="modal-body" id="modalMap">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel"></h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
             </button>
           </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12 modal_body_map">
+                <div class="location-map" id="location-map"></div>
+              </div>
+            </div>
+          </div>
         </div>
-      </form>
+      </div>
     </div>
-    <br />
-    <div class="container" id="results-div"></div>
+  </div>
+  <!-- end of code inspired by https://embed.plnkr.co/plunk/ZDkUYz -->
 
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
-    <script src="./present.js"></script>
-    <div class="footer navbar-fixed-bottom" id="footer">
-      built by nick + izzy + scott + kevin + ky
+  <nav class="nav-bar">
+    <div class="mx-auto" style="width: 110px;">
+      <a href="index.html">
+        <img class="logo" src="./assets/images/logo-01.png" />
+      </a>
     </div>
-  </body>
+  </nav>
+
+  <div class="container" id="form-input">
+    <h1>slogan slogan slogan</h1>
+
+    <form>
+      <div class="form-group row">
+        <div class="col-7">
+          <input type="text" name="addy" class="form-control" id="startAddress" placeholder="Your Address" />
+        </div>
+        <div class="col-3">
+          <select class="custom-select " id="miles">
+            <option selected>within distance</option>
+            <option id="radius" value="1">1 mile</option>
+            <option id="radius" value="2">2 miles</option>
+            <option id="radius" value="5">5 miles</option>
+            <option id="radius" value="10">10 miles</option>
+            <option id="radius" value="20">20 miles</option>
+          </select>
+        </div>
+        <div class="col-2">
+          <button id="doItGeocode" type="button" class="btn btn-outline-light">
+            <i class="fas fa-search"></i> Search
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <br />
+  <!--anime.js code from http://tobiasahlin.com/moving-letters/#-->
+  <div class="container" id="loading-icon"></div>
+  <div class="container" id="results-div"></div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="./present.js"></script>
+  <div class="footer navbar-fixed-bottom" id="footer">
+    built by nick + izzy + scott + kevin + ky
+  </div>
+</body>
+
 </html>
