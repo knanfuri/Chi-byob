@@ -17,7 +17,6 @@ $(document).ready(function() {
   let startLongitude;
   let yelpObject;
   let googApiKey;
-  let ajaxError = false;
 
   // our first major component is geocoding to transform an address into latitude and longitude
   geocodeAddress();
@@ -85,11 +84,18 @@ $(document).ready(function() {
       $.ajax({
         url: queryGeoUrl,
         method: "GET"
-      }).then(function(response) {
-        startLatitude = response.results[0].geometry.location.lat;
-        startLongitude = response.results[0].geometry.location.lng;
-        doYelp();
-      });
+      })
+        .then(function(response) {
+          startLatitude = response.results[0].geometry.location.lat;
+          startLongitude = response.results[0].geometry.location.lng;
+          doYelp();
+        })
+        .catch(function(err) {
+          console.log("geocode error", err);
+          startLatitude = 41.8957828;
+          startLongitude = -87.6377203;
+          doYelp();
+        });
     });
   }
   // our second major component is getting a list of nearby byob restaurants from yelp
@@ -115,12 +121,13 @@ $(document).ready(function() {
       .then(function(response) {
         // the yelpObject and yelpBackup are for presentation contingency that we are having server side errors from yelp
         yelpObject = response;
+        // only push to yelpBackup to save a search result in database
         // yelpBackup.push(yelpObject);
         renderYelp(response);
       })
       // This catches the potential yelp error and instead loads from our database of pre-searched yelp objects
       .catch(function(err) {
-        console.log(err);
+        console.log("yelp error", err);
         yelpBackup.orderByChild("businesses").on("child_added", function(snap) {
           let response = snap.val();
           yelpObject = response;
