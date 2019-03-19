@@ -24,7 +24,6 @@ body.second {
   box-sizing: border-box;
 }
 .navbar {
-
   background-color: black;
   position: relative;
   top: 0;
@@ -39,9 +38,8 @@ body.second {
 }
 
 h1 {
-  font-size: 2rem;
   color: white;
-  padding: 2px;
+  padding: 30px;
 }
 
 #results-div {
