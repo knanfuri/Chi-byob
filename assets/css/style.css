@@ -4,7 +4,7 @@ html {
   min-height: 100%;
 }
 
-body {
+body.initial {
   background-image: url(../images/background-image.jpg);
   /* height: 100%; */
   background-position: center;
@@ -13,10 +13,20 @@ body {
   /* color: white; */
   font-family: "Work Sans", sans-serif;
 }
+body.second {
+  background-image: url(../images/close_background.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: "Work Sans", sans-serif;
+}
 * {
   box-sizing: border-box;
 }
 .nav-bar {
+  /* The nav bar isn't at the top of my screen, so I suggest adding some positioning. */
+  position: relative;
+  top: -33px;
   background-color: black;
 }
 
