@@ -13,6 +13,7 @@ body.initial {
   /* color: white; */
   font-family: "Work Sans", sans-serif;
 }
+
 body.second {
   background-image: url(../images/close_background.jpg);
   background-position: center;
@@ -32,6 +33,11 @@ body.second {
 
 .logo {
   max-width: 110px;
+}
+
+h1 {
+  color: white;
+  padding: 30px;
 }
 
 #results-div {
