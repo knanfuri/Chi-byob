@@ -25,7 +25,6 @@ body.second {
   box-sizing: border-box;
 }
 .nav-bar {
-  /* The nav bar isn't at the top of my screen, so I suggest adding some positioning. */
   position: relative;
   top: -33px;
   background-color: black;
@@ -36,8 +35,9 @@ body.second {
 }
 
 h1 {
+  font-size: 2rem;
   color: white;
-  padding: 30px;
+  padding: 2px;
 }
 
 #results-div {
