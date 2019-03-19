@@ -85,9 +85,7 @@ $(document).ready(function() {
     `);
         }
 
-
         $(document).on("click", ".directionsButton", function() {
-
           let buttonId = $(this).attr("id");
           console.log($(this));
 

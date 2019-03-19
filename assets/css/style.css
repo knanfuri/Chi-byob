@@ -13,6 +13,7 @@ body {
   /* color: white; */
   font-family: "Work Sans", sans-serif;
 }
+
 * {
   box-sizing: border-box;
 }
@@ -22,6 +23,11 @@ body {
 
 .logo {
   max-width: 110px;
+}
+
+h1 {
+  color: white;
+  padding: 30px;
 }
 
 #results-div {
