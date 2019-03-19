@@ -18,9 +18,20 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="./geoCoder.js"></script> -->
   </head>
 
   <body class="initial">
+    <nav class="navbar navbar-expand-lg" id="navbar">
+      <div class="mx-auto" style="width: 110px;" id="logo">
+        <a href="index.html">
+          <img class="logo" src="./assets/images/logo-01.png" />
+        </a>
+      </div>
+    </nav>
+
     <!-- Modal code below inspired by https://embed.plnkr.co/plunk/ZDkUYz -->
     <div class="modal-body" id="modalMap">
       <div
@@ -56,18 +67,11 @@
     </div>
     <!-- end of code inspired by https://embed.plnkr.co/plunk/ZDkUYz -->
 
-    <nav class="nav-bar">
-      <div class="mx-auto" style="width: 110px;">
-        <a href="index.html">
-          <img class="logo" src="./assets/images/logo-01.png" />
-        </a>
-      </div>
-    </nav>
-
     <div class="container" id="form-input">
       <h1>An App for Thirsty Foodies</h1>
 
       <form>
+
         <div class="form-group row">
           <div class="col-7">
             <input
@@ -75,6 +79,7 @@
               name="addy"
               class="form-control"
               id="startAddress"
+
               placeholder="address, city, state"
             />
           </div>
@@ -127,4 +132,5 @@
       built by nick + izzy + scott + kevin + ky
     </div>
   </body>
+
 </html>

@@ -13,7 +13,6 @@ body.initial {
   /* color: white; */
   font-family: "Work Sans", sans-serif;
 }
-
 body.second {
   background-image: url(../images/close_background.jpg);
   background-position: center;
@@ -24,10 +23,15 @@ body.second {
 * {
   box-sizing: border-box;
 }
-.nav-bar {
-  position: relative;
-  top: -33px;
+.navbar {
+
   background-color: black;
+  position: relative;
+  top: 0;
+}
+
+#nav-search {
+  float: right;
 }
 
 .logo {
@@ -114,7 +118,7 @@ th {
   left: 0;
   height: 3px;
   width: 100%;
-  background-color:#fff;
+  background-color: #fff;
   transform-origin: 0 0;
 }
 
