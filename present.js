@@ -12,6 +12,7 @@ $(document).ready(function() {
 
   const dB = firebase.database();
   const yelpBackup = dB.ref("yelpBackup");
+  const notByob = dB.ref("yelpBackup/notByob");
   // global flags
   let startLatitude;
   let startLongitude;
@@ -131,9 +132,8 @@ $(document).ready(function() {
         yelpBackup.orderByChild("businesses").on("child_added", function(snap) {
           let response = snap.val();
           yelpObject = response;
-
           renderYelp(response);
-          console.log(snap.val());
+          console.log("yelp backup object", snap.val());
         });
       });
     function renderYelp(response) {
@@ -189,19 +189,17 @@ $(document).ready(function() {
 
   // handles the directions buttons
   $(document).on("click", ".directionsButton", function() {
-    let buttonId = $(this).attr("id");
-    console.log($(this));
-
+    // we trim the first two characters to get the yelpObject index from the dynamically generated button's id
     let index = $(this)
       .attr("id")
       .substr(2);
-    console.log(index);
-
+    // get the latitude and longitude from the indexed yelpObject
     let destinationLatitude = yelpObject.businesses[index].coordinates.latitude;
     let destinationLongitude =
       yelpObject.businesses[index].coordinates.longitude;
-    // google directions ajax call
+    // google directions url
     let queryDirUrl = `https://www.google.com/maps/embed/v1/directions?origin=${startLatitude},${startLongitude}&destination=${destinationLatitude},${destinationLongitude}${googApiKey}`;
+    // instead of an ajax call the iframe source gets an embedded map from google API directly via url
     $(".location-map").html(
       `<iframe width='760'  height='450'  frameborder='0' style='border:0'  src=${queryDirUrl} allowfullscreen></iframe>`
     );
@@ -210,14 +208,36 @@ $(document).ready(function() {
     );
   });
 
+  let flaggedSpots = [];
+
+  notByob.orderByChild("name").on("child_added", function(snap) {
+    flaggedSpots.push(snap.val().name);
+  });
+  console.log(flaggedSpots);
+
   // Handle the denial buttons
   $(document).on("click", ".denialButton", function() {
-    let denialId = $(this).attr("id");
-    console.log(denialId + "is not a BYOB");
-
+    // we trim the first five characters to get the index from the buttons id
     let denialIndex = $(this)
       .attr("id")
       .substr(5);
-    console.log(yelpObject.businesses[denialIndex].name);
+    // console.log(yelpObject.businesses[denialIndex].name + "is not a BYOB");
+    let notName = yelpObject.businesses[denialIndex].name;
+    // // if name is in database we get the count and add to it
+    // if (flaggedSpots.includes(notName)) {
+    //   console.log("its in there", flaggedSpots.indexOf(notName));
+
+    //   //   // else we push object into database with count 1
+    // } else {
+    //   let notCount = 1;
+    //   let notObject = { name: notName, count: notCount };
+    //   notByob.push(notObject);
+    // }
+
+    // notByob.orderByChild("businesses").on("child_added", function(snap) {
+    //   console.log(snap.val().name);
+
+    notByob.orderByChild("businesses").equalTo(notName);
+    // });
   });
 });
