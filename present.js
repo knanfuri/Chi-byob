@@ -1,7 +1,7 @@
-$(document).ready(function() {
+$(document).ready(function () {
   //   $('[data-toggle="tooltip"]').tooltip();
 
-  $("#doItGeocode").on("click", function() {
+  $("#doItGeocode").on("click", function () {
     let address = $("#startAddress")
       .val()
       .split(" ")
@@ -17,7 +17,7 @@ $(document).ready(function() {
     $.ajax({
       url: queryGeoUrl,
       method: "GET"
-    }).then(function(response) {
+    }).then(function (response) {
       let startLatitude = response.results[0].geometry.location.lat;
       let startLongitude = response.results[0].geometry.location.lng;
 
@@ -39,7 +39,8 @@ $(document).ready(function() {
         url: queryYelpUrl,
         method: "GET",
         headers: headerParams
-      }).then(function(response) {
+      }).then(function (response) {
+        $("body").addClass("second");
         let yelpObject = response;
         for (var i = 0; i < response.businesses.length; i++) {
           $("#results-div").append(`
@@ -48,39 +49,38 @@ $(document).ready(function() {
         <div class="row no-gutters">
             <div class="col-md-4">
                 <img class="smallImg img-fluid" src="${
-                  response.businesses[i].image_url
-                }">
+            response.businesses[i].image_url
+            }">
             </div>
             <div class="col-md-8">
             <div class="card-body">
                     <div class="col">
                         <div class="row">
                             <h4 class="card-title">${
-                              response.businesses[i].name
-                            }</h4>
+            response.businesses[i].name
+            }</h4>
                             </div>
                             
                             <div class="row">
                             <div class="card-text">${
-                              response.businesses[i].location.address1
-                            }, ${response.businesses[i].location.city}</div>
+            response.businesses[i].location.address1
+            }, ${response.businesses[i].location.city}</div>
 
                         </div>
                         <div class="row">Phone No: ${
-                          response.businesses[i].phone
-                        }</div>
+            response.businesses[i].phone
+            }</div>
                         <div class="row food-type">${
-                          response.businesses[i].categories[0].title
-                        }</div>
+            response.businesses[i].categories[0].title
+            }</div>
                         <div class="row">
-                        <button class="directionsButton inside btn btn-dark" id='id${i}'>Give me directions</button>
-                        <span><button class="inside btn btn-dark">Not BYOB? Click here.</button></span>
+
+                        <div class="col-6"><button class="directionsButton inside btn btn-dark" id='id${i}' data-toggle="modal" data-target="#myModal">Give me directions</button></div>
+                        <div class="col-6"><button class="inside btn btn-dark denialButton" id='notid${i}'>Not BYOB? Click here.</button></div>
                     </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-6"><button class="directionsButton" id='id${i}' data-toggle="modal" data-target="#myModal">Give me directions</button></div>
-                    <div class="col-6"><button class="denialButton" id="notid${i}">Not BYOB? Click here.</button></div>
+            
                 </div>
             </div>
         </div>
@@ -88,9 +88,10 @@ $(document).ready(function() {
     `);
         }
 
-        $(document).on("click", ".directionsButton", function() {
+        $(document).on("click", ".directionsButton", function () {
           let buttonId = $(this).attr("id");
           console.log($(this));
+
 
           let index = $(this)
             .attr("id")
@@ -110,7 +111,7 @@ $(document).ready(function() {
             `Directions to ${yelpObject.businesses[index].name}`
           );
         });
-        $(document).on("click", ".denialButton", function() {
+        $(document).on("click", ".denialButton", function () {
           let denialId = $(this).attr("id");
           console.log(denialId + "is not a BYOB");
 
