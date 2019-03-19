@@ -41,6 +41,7 @@ $(document).ready(function() {
         headers: headerParams
       }).then(function(response) {
         $("body").addClass("second");
+
         let yelpObject = response;
         for (var i = 0; i < response.businesses.length; i++) {
           $("#results-div").append(`
