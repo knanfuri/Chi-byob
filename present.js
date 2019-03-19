@@ -2,6 +2,7 @@ $(document).ready(function () {
   //   $('[data-toggle="tooltip"]').tooltip();
 
   $("#doItGeocode").on("click", function () {
+
     let address = $("#startAddress")
       .val()
       .split(" ")
@@ -9,6 +10,48 @@ $(document).ready(function () {
     console.log(address);
 
     $("#form-input").hide();
+
+    $("#loading-icon").append(`<h1 class="ml1">
+    <span class="text-wrapper">
+        <span class="line line1"></span>
+        <span class="letters">LOADING</span>
+        <span class="line line2"></span>
+      </span>
+    </h1>`)
+
+    $('.ml1 .letters').each(function () {
+      $(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>"));
+    });
+
+    anime.timeline({ loop: true })
+      .add({
+        targets: '.ml1 .letter',
+        scale: [0.3, 1],
+        opacity: [0, 1],
+        translateZ: 0,
+        easing: "easeOutExpo",
+        duration: 600,
+        delay: function (el, i) {
+          return 70 * (i + 1)
+        }
+      }).add({
+        targets: '.ml1 .line',
+        scaleX: [0, 1],
+        opacity: [0.5, 1],
+        easing: "easeOutExpo",
+        duration: 700,
+        offset: '-=875',
+        delay: function (el, i, l) {
+          return 80 * (l - i);
+        }
+      }).add({
+        targets: '.ml1',
+        opacity: 0,
+        duration: 1000,
+        easing: "easeOutExpo",
+        delay: 1000
+      });
+
 
     let qaddress = `address=${address}`;
     let googApiKey = `&key=AIzaSyCzZNcykfia8yZWraDJE98aLEGuNw3V4Ro`;
@@ -43,6 +86,7 @@ $(document).ready(function () {
         $("body").addClass("second");
         let yelpObject = response;
         for (var i = 0; i < response.businesses.length; i++) {
+          $("#loading-icon").hide();
           $("#results-div").append(`
         
         <div class="card mb-3" style="max-width: 800px;">
