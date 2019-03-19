@@ -30,6 +30,53 @@ $(document).ready(function() {
       // console.log(address);
 
       $("#form-input").hide();
+      $("#loading-icon").append(`<h1 class="ml1">
+    <span class="text-wrapper">
+        <span class="line line1"></span>
+        <span class="letters">LOADING</span>
+        <span class="line line2"></span>
+      </span>
+    </h1>`);
+
+      $(".ml1 .letters").each(function() {
+        $(this).html(
+          $(this)
+            .text()
+            .replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>")
+        );
+      });
+
+      anime
+        .timeline({ loop: true })
+        .add({
+          targets: ".ml1 .letter",
+          scale: [0.3, 1],
+          opacity: [0, 1],
+          translateZ: 0,
+          easing: "easeOutExpo",
+          duration: 600,
+          delay: function(el, i) {
+            return 70 * (i + 1);
+          }
+        })
+        .add({
+          targets: ".ml1 .line",
+          scaleX: [0, 1],
+          opacity: [0.5, 1],
+          easing: "easeOutExpo",
+          duration: 700,
+          offset: "-=875",
+          delay: function(el, i, l) {
+            return 80 * (l - i);
+          }
+        })
+        .add({
+          targets: ".ml1",
+          opacity: 0,
+          duration: 1000,
+          easing: "easeOutExpo",
+          delay: 1000
+        });
       // set up the google geocoding ajax call
       let qaddress = `address=${address}`;
       googApiKey = `&key=AIzaSyCzZNcykfia8yZWraDJE98aLEGuNw3V4Ro`;
@@ -55,11 +102,10 @@ $(document).ready(function() {
     // i hope term=byob works for us!-but we get some false positives
     let queryYelpUrl = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=byob&latitude=${startLatitude}&longitude=${startLongitude}&radius=${searchRadius}&api_key=${yelpApiKey}&open_now=true`;
     //   we need cors implementation- thanks to TA Michael for the headerParams tip
-    const headerParams = 1;
-    // {
-    //   Authorization:
-    //     "bearer iXz6CphpOprm4NkabLwuanwM8yIEQhqd2GYhVMHIep1SNAVRfRKKGl9N8DS7jXHxuOowfKm1kplvxQYV__DC74XDrxf-BshhyNj_j8_X0bpIgErelHgQTUvj6YaBXHYx"
-    // };
+    const headerParams = {
+      Authorization:
+        "bearer iXz6CphpOprm4NkabLwuanwM8yIEQhqd2GYhVMHIep1SNAVRfRKKGl9N8DS7jXHxuOowfKm1kplvxQYV__DC74XDrxf-BshhyNj_j8_X0bpIgErelHgQTUvj6YaBXHYx"
+    };
     // the yelp ajax call
     $.ajax({
       url: queryYelpUrl,
@@ -84,7 +130,9 @@ $(document).ready(function() {
         });
       });
     function renderYelp(response) {
+      $("body").addClass("second");
       for (var i = 0; i < response.businesses.length; i++) {
+        $("#loading-icon").hide();
         $("#results-div").append(`
       
       <div class="card mb-3" style="max-width: 800px;">
@@ -116,14 +164,13 @@ $(document).ready(function() {
                         response.businesses[i].categories[0].title
                       }</div>
                       <div class="row">
-                      <button class="directionsButton inside btn btn-dark" id='id${i}'>Give me directions</button>
-                      <span><button class="inside btn btn-dark">Not BYOB? Click here.</button></span>
+
+                      <div class="col-6"><button class="directionsButton inside btn btn-dark" id='id${i}' data-toggle="modal" data-target="#myModal">Give me directions</button></div>
+                      <div class="col-6"><button class="inside btn btn-dark denialButton" id='notid${i}'>Not BYOB? Click here.</button></div>
                   </div>
                   </div>
               </div>
-              <div class="row">
-                  <div class="col-6"><button class="directionsButton" id='id${i}' data-toggle="modal" data-target="#myModal">Give me directions</button></div>
-                  <div class="col-6"><button class="denialButton" id="notid${i}">Not BYOB? Click here.</button></div>
+          
               </div>
           </div>
       </div>
