@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Working</title>
-    <!-- <link rel="stylesheet" href="./assets/css/reset.css" /> -->
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -69,9 +68,10 @@
     <!-- end of code inspired by https://embed.plnkr.co/plunk/ZDkUYz -->
 
     <div class="container" id="form-input">
-      <h1>slogan slogan slogan</h1>
+      <h1>An App for Thirsty Foodies</h1>
 
-      <form id="landing">
+      <form>
+
         <div class="form-group row">
           <div class="col-7">
             <input
@@ -79,7 +79,8 @@
               name="addy"
               class="form-control"
               id="startAddress"
-              placeholder="Your Address"
+
+              placeholder="address, city, state"
             />
           </div>
           <div class="col-3">
@@ -102,28 +103,34 @@
             </button>
           </div>
         </div>
-      </div>
-    </form>
-  </div>
-  <br />
-  <!--anime.js code from http://tobiasahlin.com/moving-letters/#-->
-  <div class="container" id="loading-icon"></div>
-  <div class="container" id="results-div"></div>
+      </form>
+    </div>
+    <br />
+    <!--anime.js code from http://tobiasahlin.com/moving-letters/#-->
+    <div class="container" id="loading-icon"></div>
+    <div class="container" id="results-div"></div>
 
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-  <script src="./present.js"></script>
-  <div class="footer navbar-fixed-bottom" id="footer">
-    built by nick + izzy + scott + kevin + ky
-  </div>
-</body>
-
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
+    <script src="./present.js"></script>
+    <div class="footer navbar-fixed-bottom" id="footer">
+      built by nick + izzy + scott + kevin + ky
+    </div>
+  </body>
 
 </html>
