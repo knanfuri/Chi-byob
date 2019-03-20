@@ -173,7 +173,7 @@ $(document).ready(function() {
                       <div class="row">
 
                       <div class="col-6"><button class="directionsButton inside btn btn-dark" id='id${i}' data-toggle="modal" data-target="#myModal">Give me directions</button></div>
-                      <div class="col-6"><button class="inside btn btn-dark denialButton" id='notid${i}'>Not BYOB? Click here.</button></div>
+                      <div class="col-6"><button class="inside btn btn-dark denialButton" id='notid${i}' data-toggle="modal" data-target="#myModalF">Not BYOB? Click here.</button></div>
                   </div>
                   </div>
               </div>
@@ -203,41 +203,64 @@ $(document).ready(function() {
     $(".location-map").html(
       `<iframe width='760'  height='450'  frameborder='0' style='border:0'  src=${queryDirUrl} allowfullscreen></iframe>`
     );
-    $("#myModalLabel").text(
+    $("#myModalLabelF").text(
       `Directions to ${yelpObject.businesses[index].name}`
     );
   });
-
+  // creates an array of flaggedSpots (objects) on load and child-added
   let flaggedSpots = [];
 
   notByob.orderByChild("name").on("child_added", function(snap) {
-    flaggedSpots.push(snap.val().name);
+    let flagName = snap.val().name;
+    let flagCount = snap.val().count;
+    let flagKey = snap.key;
+
+    let flaggedRestaurant = {
+      name: flagName,
+      count: flagCount,
+      key: flagKey
+    };
+    flaggedSpots.push(flaggedRestaurant);
   });
-  console.log(flaggedSpots);
+
+  console.log("these are the flaggedSpots", flaggedSpots);
 
   // Handle the denial buttons
   $(document).on("click", ".denialButton", function() {
-    // we trim the first five characters to get the index from the buttons id
+    // we trim the first five characters to get the index from the buttons id, and the appropriate restaurant name
     let denialIndex = $(this)
       .attr("id")
       .substr(5);
-    // console.log(yelpObject.businesses[denialIndex].name + "is not a BYOB");
     let notName = yelpObject.businesses[denialIndex].name;
-    // // if name is in database we get the count and add to it
-    // if (flaggedSpots.includes(notName)) {
-    //   console.log("its in there", flaggedSpots.indexOf(notName));
+    // we send a feedback modal because we appreciate the user
+    $("#modalFeedback").text(
+      `Thank you for your input regarding ${notName}. ChiBYOB leverages crowd-sourced intelligence to compensate for inaccurate search engine results. Your important feedback helps ChiBYOB make the world a BYOBetter place!`
+    );
+    $("#myModalLabelF").text(`You Flagged ${notName}`);
+    // if the name is not in database we push object into database with count 1
+    var flagIndex = flaggedSpots.findIndex(object => object.name == notName);
+    console.log(flagIndex);
 
-    //   //   // else we push object into database with count 1
-    // } else {
-    //   let notCount = 1;
-    //   let notObject = { name: notName, count: notCount };
-    //   notByob.push(notObject);
-    // }
+    if (flagIndex == -1) {
+      let notCount = 1;
+      let notObject = { name: notName, count: 1 };
+      notByob.push(notObject);
+
+      //   // else we get the count and add to the count
+    } else {
+      let notObject = {
+        name: notName,
+        count: flaggedSpots[flagIndex].count + 1
+      };
+      dB.ref("yelpBackup/notByob/" + flaggedSpots[flagIndex].key).set(
+        notObject
+      );
+    }
 
     // notByob.orderByChild("businesses").on("child_added", function(snap) {
     //   console.log(snap.val().name);
 
-    notByob.orderByChild("businesses").equalTo(notName);
+    // console.log(notByob.orderByChild("businesses").equalTo(notName));
     // });
   });
 });
