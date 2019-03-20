@@ -26,7 +26,7 @@ body.second {
 }
 .nav-bar {
   position: relative;
-  top: -33px;
+  top: 0;
   background-color: black;
 }
 
@@ -114,7 +114,7 @@ th {
   left: 0;
   height: 3px;
   width: 100%;
-  background-color:#fff;
+  background-color: #fff;
   transform-origin: 0 0;
 }
 
