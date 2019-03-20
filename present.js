@@ -203,7 +203,7 @@ $(document).ready(function() {
     $(".location-map").html(
       `<iframe width='760'  height='450'  frameborder='0' style='border:0'  src=${queryDirUrl} allowfullscreen></iframe>`
     );
-    $("#myModalLabelF").text(
+    $("#myModalLabel").text(
       `Directions to ${yelpObject.businesses[index].name}`
     );
   });
@@ -239,7 +239,7 @@ $(document).ready(function() {
     $("#myModalLabelF").text(`You Flagged ${notName}`);
     // if the name is not in database we push object into database with count 1
     var flagIndex = flaggedSpots.findIndex(object => object.name == notName);
-    console.log(flagIndex);
+    console.log("this button is flagIndex " + flagIndex);
 
     if (flagIndex == -1) {
       let notCount = 1;
