@@ -27,10 +27,18 @@ $(document).ready(function() {
         .val()
         .split(" ")
         .join("+");
-      // console.log(address);
+      if (address.length == 0) {
+        console.log("problemo");
+        $("#myModalF").modal("show");
+        $("#modalFeedback").text(
+          "Please enter an address-- everywhere is too far from nowhere for your beverage to be cold when you arrive!"
+        );
+        $("#myModalLabelF").text(`Input: Where Are You?`);
+      } else {
+        // console.log(address);
 
-      $("#form-input").hide();
-      $("#loading-icon").append(`<h1 class="ml1">
+        $("#form-input").hide();
+        $("#loading-icon").append(`<h1 class="ml1">
     <span class="text-wrapper">
         <span class="line line1"></span>
         <span class="letters">LOADING</span>
@@ -38,65 +46,67 @@ $(document).ready(function() {
       </span>
     </h1>`);
 
-      $(".ml1 .letters").each(function() {
-        $(this).html(
-          $(this)
-            .text()
-            .replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>")
-        );
-      });
+        $(".ml1 .letters").each(function() {
+          $(this).html(
+            $(this)
+              .text()
+              .replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>")
+          );
+        });
 
-      anime
-        .timeline({ loop: true })
-        .add({
-          targets: ".ml1 .letter",
-          scale: [0.3, 1],
-          opacity: [0, 1],
-          translateZ: 0,
-          easing: "easeOutExpo",
-          duration: 600,
-          delay: function(el, i) {
-            return 70 * (i + 1);
-          }
+        anime
+          .timeline({ loop: true })
+          .add({
+            targets: ".ml1 .letter",
+            scale: [0.3, 1],
+            opacity: [0, 1],
+            translateZ: 0,
+            easing: "easeOutExpo",
+            duration: 600,
+            delay: function(el, i) {
+              return 70 * (i + 1);
+            }
+          })
+          .add({
+            targets: ".ml1 .line",
+            scaleX: [0, 1],
+            opacity: [0.5, 1],
+            easing: "easeOutExpo",
+            duration: 700,
+            offset: "-=875",
+            delay: function(el, i, l) {
+              return 80 * (l - i);
+            }
+          })
+          .add({
+            targets: ".ml1",
+            opacity: 0,
+            duration: 1000,
+            easing: "easeOutExpo",
+            delay: 1000
+          });
+
+        // set up the google geocoding ajax call
+        let qaddress = `address=${address}`;
+        googApiKey = `&key=AIzaSyCzZNcykfia8yZWraDJE98aLEGuNw3V4Ro`;
+        let queryGeoUrl = `https://maps.googleapis.com/maps/api/geocode/json?${qaddress}${googApiKey}`;
+        // the google geocode ajax call
+        $.ajax({
+          url: queryGeoUrl,
+          method: "GET"
         })
-        .add({
-          targets: ".ml1 .line",
-          scaleX: [0, 1],
-          opacity: [0.5, 1],
-          easing: "easeOutExpo",
-          duration: 700,
-          offset: "-=875",
-          delay: function(el, i, l) {
-            return 80 * (l - i);
-          }
-        })
-        .add({
-          targets: ".ml1",
-          opacity: 0,
-          duration: 1000,
-          easing: "easeOutExpo",
-          delay: 1000
-        });
-      // set up the google geocoding ajax call
-      let qaddress = `address=${address}`;
-      googApiKey = `&key=AIzaSyCzZNcykfia8yZWraDJE98aLEGuNw3V4Ro`;
-      let queryGeoUrl = `https://maps.googleapis.com/maps/api/geocode/json?${qaddress}${googApiKey}`;
-      // the google geocode ajax call
-      $.ajax({
-        url: queryGeoUrl,
-        method: "GET"
-      })
-        .then(function(response) {
-          startLatitude = response.results[0].geometry.location.lat;
-          startLongitude = response.results[0].geometry.location.lng;
-          doYelp();
-        })
-        .catch(function(err) {
-          console.log("geocode error", err);
-          startLatitude = 41.8957828;
-          startLongitude = -87.6377203;
-          doYelp();
-        });
+          .then(function(response) {
+            startLatitude = response.results[0].geometry.location.lat;
+            startLongitude = response.results[0].geometry.location.lng;
+            doYelp();
+          })
+          .catch(function(err) {
+            console.log("geocode error", err);
+            startLatitude = 41.8957828;
+            startLongitude = -87.6377203;
+            doYelp();
+          });
+      }
     });
   }
   // our second major component is getting a list of nearby byob restaurants from yelp
